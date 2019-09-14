@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,7 +16,6 @@ public class Wrist extends Subsystem {
   private CANSparkMax motor;
   private CANEncoder encoder;
   private double lastPos;
-  CANPIDController controller;
 
   public Wrist(int deviceId, MotorType type, double gearRatio) {
     motor = new CANSparkMax(deviceId, type);
