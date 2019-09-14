@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -66,8 +68,7 @@ public class Robot extends TimedRobot {
     arm = new Arm(armGroup, RobotMap.ARM_ENCODER_A_CHANNEL, RobotMap.ARM_ENCODER_B_CHANNEL, RobotMap.ARM_ENCODER_PPR,
         RobotMap.ARM_GEAR_RATIO);
 
-    wrist = new Wrist(RobotMap.WRIST_MOTOR_CHANNEL, RobotMap.WRIST_ENCODER_A_CHANNEL, RobotMap.WRIST_ENCODER_B_CHANNEL,
-        RobotMap.WRIST_ENCODER_PPR, RobotMap.WRIST_GEAR_RATIO);
+    wrist = new Wrist(RobotMap.WRIST_CAN_ID, MotorType.kBrushless, RobotMap.WRIST_GEAR_RATIO);
 
     claw = new Claw(RobotMap.CLAW_FORWARD_CHANNEL, RobotMap.CLAW_REVERSE_CHANNEL);
 
@@ -144,7 +145,7 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
 
     oi.clawToggleButton.whenPressed(new ToggleClaw());
-    oi.elevatorToggleButton.whenPressed(new ToggleElevator());
+    // oi.elevatorToggleButton.whenPressed(new ToggleElevator());
 
     oi.hatchLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.hatch));
     oi.hatchMediumButton.whenPressed(new MoveArmToLevel(Level.medium, Gamepiece.hatch));

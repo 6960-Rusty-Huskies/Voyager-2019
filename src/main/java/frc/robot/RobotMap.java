@@ -21,19 +21,16 @@ public class RobotMap {
 
   public static final int INTAKE_BASE_PORT_CHANNEL = 7;
   public static final int INTAKE_ROLLER_PORT_CHANNEL = 10;
-  
-  public static final int WRIST_MOTOR_CHANNEL = 11;
 
   // DIO
   public static final int ARM_ENCODER_A_CHANNEL = 0;
   public static final int ARM_ENCODER_B_CHANNEL = 1;
 
   // CAN
-  public static final int WRIST_ENCODER_A_CHANNEL = 0;
-  public static final int WRIST_ENCODER_B_CHANNEL = 0;
+  public static final int WRIST_CAN_ID = 1;
 
   public static final int CLAW_FORWARD_CHANNEL = 0;
-  public static final int CLAW_REVERSE_CHANNEL = 0;
+  public static final int CLAW_REVERSE_CHANNEL = 1;
 
   /** The port for the left elevator solenoid to move to DoubleSolenoid.Value.kForward. */
   public static final int ELEVATOR_LEFT_FORWARD_CHANNEL = 0;

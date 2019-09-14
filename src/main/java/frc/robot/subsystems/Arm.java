@@ -15,7 +15,6 @@ public class Arm extends Subsystem {
 
   private SpeedController motor;
   private Encoder encoder;
-
   private double lastAngle;
 
   public Arm(SpeedController speedController, int encoderPortA, int encoderPortB, int encoderPulsesPerRevolution, double gearRatio) {
