@@ -5,6 +5,7 @@ import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import frc.robot.RobotMap;
 import frc.robot.commands.AutoSwitchCamera;
 import frc.robot.utils.Axis;
 
@@ -20,9 +21,9 @@ public class Vision extends Subsystem {
   private UsbCamera backCamera;
   private Accelerometer accelerometer;
 
-  public Vision(int frontCameraNumber, int backCameraNumber) {
-    frontCamera = CameraServer.getInstance().startAutomaticCapture(frontCameraNumber);
-    backCamera = CameraServer.getInstance().startAutomaticCapture(backCameraNumber);
+  public Vision() {
+    frontCamera = CameraServer.getInstance().startAutomaticCapture(RobotMap.FRONT_CAMERA_PORT);
+    backCamera = CameraServer.getInstance().startAutomaticCapture(RobotMap.BACK_CAMERA_PORT);
     server = CameraServer.getInstance().getServer();
     accelerometer.setRange(Accelerometer.Range.k2G);
   }

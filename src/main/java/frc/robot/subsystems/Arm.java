@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.commands.Brake;
 
 /**
@@ -15,13 +16,12 @@ public class Arm extends Subsystem {
 
   private SpeedController motor;
   private Encoder encoder;
-
   private double lastAngle;
 
-  public Arm(SpeedController speedController, int encoderPortA, int encoderPortB, int encoderPulsesPerRevolution, double gearRatio) {
+  public Arm(SpeedController speedController) {
     motor = speedController;
-    encoder = new Encoder(encoderPortA, encoderPortB);
-    encoder.setDistancePerPulse(360 / (encoderPulsesPerRevolution * gearRatio));
+    encoder = new Encoder(RobotMap.ARM_ENCODER_A_CHANNEL, RobotMap.ARM_ENCODER_B_CHANNEL);
+    encoder.setDistancePerPulse(360 / (RobotMap.ARM_ENCODER_PPR * RobotMap.ARM_GEAR_RATIO));
     lastAngle = getAngle();
   }
 

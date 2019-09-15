@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * The arm opposite to the claw-arm that intakes cargo and helps with the Hab
@@ -12,15 +13,15 @@ public class Intake extends Subsystem {
   // here. Call these from Commands.
 
   private Spark base;
-  private Spark wheels;
+  private Spark roller;
 
-  public Intake(int basePort, int rollerPort) {
-    base = new Spark(basePort);
-    wheels = new Spark(rollerPort);
+  public Intake() {
+    base = new Spark(RobotMap.INTAKE_BASE_PORT_CHANNEL);
+    roller = new Spark(RobotMap.INTAKE_ROLLER_PORT_CHANNEL);
   }
 
   public void moveRoller(double speed) {
-    wheels.set(speed);
+    roller.set(speed);
   }
 
   public void moveArm(double speed) {

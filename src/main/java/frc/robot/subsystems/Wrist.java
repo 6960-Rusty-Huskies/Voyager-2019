@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Spark;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.Brake;
+import frc.robot.RobotMap;
 
 /**
  * Smaller appendage attached to the arm that holds the claw.
@@ -12,14 +14,14 @@ public class Wrist extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private Spark motor;
-  private Encoder encoder;
+  private CANSparkMax motor;
+  private CANEncoder encoder;
   private double lastPos;
 
-  public Wrist(int motorPort, int encoderPortA, int encoderPortB, int encoderPulsesPerRevolution, double gearRatio) {
-    motor = new Spark(motorPort);
-    encoder = new Encoder(encoderPortA, encoderPortB);
-    encoder.setDistancePerPulse(360 / (encoderPulsesPerRevolution / gearRatio));
+  public Wrist(MotorType motorType) {
+    motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, motorType);
+    encoder = motor.getEncoder();
+    encoder.setPositionConversionFactor(RobotMap.WRIST_GEAR_RATIO / 360);
     lastPos = getAngle();
   }
 
@@ -36,7 +38,7 @@ public class Wrist extends Subsystem {
   }
 
   public double getAngle() {
-    return encoder.getDistance();
+    return encoder.getPosition();
   }
 
   public void tuck() {
@@ -48,7 +50,7 @@ public class Wrist extends Subsystem {
   }
 
   public boolean isTucked() {
-    return encoder.getDistance() < 5;
+    return encoder.getPosition() < 5;
   }
 
   @Override

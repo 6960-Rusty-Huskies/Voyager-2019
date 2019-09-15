@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 import frc.robot.commands.ToggleClaw;
 
 /**
@@ -14,8 +15,8 @@ public class Claw extends Subsystem {
 
   private DoubleSolenoid solenoid;
 
-  public Claw(int forwardChannel, int reverseChannel) {
-    solenoid = new DoubleSolenoid(forwardChannel, reverseChannel);
+  public Claw() {
+    solenoid = new DoubleSolenoid(RobotMap.CLAW_FORWARD_CHANNEL, RobotMap.CLAW_REVERSE_CHANNEL);
     solenoid.set(Value.kForward);
   }
 

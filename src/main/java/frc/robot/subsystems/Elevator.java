@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * The pneumatic actuators that lift the robot to get us to level 3.
@@ -14,9 +15,9 @@ public class Elevator extends Subsystem {
   private DoubleSolenoid leftSolenoid;
   private DoubleSolenoid rightSolenoid;
 
-  public Elevator(int leftForwardId, int leftReverseId, int rightForwardId, int rightReverseId) {
-    leftSolenoid = new DoubleSolenoid(leftForwardId, leftReverseId);
-    rightSolenoid = new DoubleSolenoid(rightForwardId, rightReverseId);
+  public Elevator() {
+    leftSolenoid = new DoubleSolenoid(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL);
+    rightSolenoid = new DoubleSolenoid(RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
 
     leftSolenoid.set(Value.kReverse);
     rightSolenoid.set(Value.kReverse);

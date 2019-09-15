@@ -12,7 +12,6 @@ public class DriveBase extends Subsystem {
 
   private SpeedController leftMotor;
   private SpeedController rightMotor;
-
   public DifferentialDrive drive;
 
   public DriveBase(SpeedController left, SpeedController right) {
