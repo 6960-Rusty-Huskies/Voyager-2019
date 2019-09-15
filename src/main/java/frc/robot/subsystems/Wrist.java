@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.Brake;
+import frc.robot.RobotMap;
 
 /**
  * Smaller appendage attached to the arm that holds the claw.
@@ -17,10 +18,10 @@ public class Wrist extends Subsystem {
   private CANEncoder encoder;
   private double lastPos;
 
-  public Wrist(int deviceId, MotorType type, double gearRatio) {
-    motor = new CANSparkMax(deviceId, type);
+  public Wrist(MotorType motorType) {
+    motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, motorType);
     encoder = motor.getEncoder();
-    encoder.setPositionConversionFactor(gearRatio / 360);
+    encoder.setPositionConversionFactor(RobotMap.WRIST_GEAR_RATIO / 360);
     lastPos = getAngle();
   }
 

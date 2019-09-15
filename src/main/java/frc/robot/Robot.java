@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     oi = new OI();
-    vision = new Vision(RobotMap.FRONT_CAMERA_PORT, RobotMap.BACK_CAMERA_PORT);
+    vision = new Vision();
 
     Spark leftTop = new Spark(RobotMap.DRIVE_LEFT_TOP_CHANNEL);
     Spark leftFront = new Spark(RobotMap.DRIVE_LEFT_FRONT_CHANNEL);
@@ -65,14 +65,13 @@ public class Robot extends TimedRobot {
     Spark armBottom = new Spark(RobotMap.ARM_MOTOR_BOTTOM_CHANNEL);
     SpeedControllerGroup armGroup = new SpeedControllerGroup(armTop, armBottom);
 
-    arm = new Arm(armGroup, RobotMap.ARM_ENCODER_A_CHANNEL, RobotMap.ARM_ENCODER_B_CHANNEL, RobotMap.ARM_ENCODER_PPR,
-        RobotMap.ARM_GEAR_RATIO);
+    arm = new Arm(armGroup);
 
-    wrist = new Wrist(RobotMap.WRIST_CAN_ID, MotorType.kBrushless, RobotMap.WRIST_GEAR_RATIO);
+    wrist = new Wrist(MotorType.kBrushless);
 
-    claw = new Claw(RobotMap.CLAW_FORWARD_CHANNEL, RobotMap.CLAW_REVERSE_CHANNEL);
+    claw = new Claw();
 
-    intake = new Intake(RobotMap.INTAKE_BASE_PORT_CHANNEL, RobotMap.INTAKE_ROLLER_PORT_CHANNEL);
+    intake = new Intake();
 
     // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
     //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);

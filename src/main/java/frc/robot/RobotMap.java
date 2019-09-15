@@ -81,6 +81,4 @@ public class RobotMap {
 
   /** The number of pulses sent by the arm encoder per full revolution. */
   public static final int ARM_ENCODER_PPR = 0;
-  /** The number of pulses sent by the wrist encoder per full revolution. */
-  public static final int WRIST_ENCODER_PPR = 0;
 }
