@@ -40,8 +40,8 @@ public class Elevator extends Subsystem {
     rightSolenoid.set(Value.kReverse);
   }
 
-  public Value value() {
-    return leftSolenoid.get();
+  public boolean isDown() {
+    return leftSolenoid.get() == Value.kForward;
   }
 
   @Override

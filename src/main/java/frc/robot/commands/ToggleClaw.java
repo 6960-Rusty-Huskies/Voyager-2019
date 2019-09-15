@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ToggleClaw extends Command {
-  private boolean initialState;
+  private boolean initialValue;
 
   public ToggleClaw() {
     requires(Robot.claw);
-    initialState = Robot.claw.isOpen();
+    initialValue = Robot.claw.isOpen();
   }
 
   // Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class ToggleClaw extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.claw.isOpen() != initialState;
+    return Robot.claw.isOpen() != initialValue;
   }
 
   // Called once after isFinished returns true
