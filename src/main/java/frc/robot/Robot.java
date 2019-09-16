@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.triggers.*;
 import frc.robot.utils.Gamepiece;
 import frc.robot.utils.Level;
 
@@ -37,18 +36,12 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static Vision vision;
 
-  public static JoystickTrigger armJoystickTrigger;
-  public static JoystickTrigger intakeJoystickTrigger;
-
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
   @Override
   public void robotInit() {
-    oi = new OI();
-    vision = new Vision();
-
     Spark leftTop = new Spark(RobotMap.DRIVE_LEFT_TOP_CHANNEL);
     Spark leftFront = new Spark(RobotMap.DRIVE_LEFT_FRONT_CHANNEL);
     Spark leftBack = new Spark(RobotMap.DRIVE_LEFT_BACK_CHANNEL);
@@ -66,18 +59,14 @@ public class Robot extends TimedRobot {
     SpeedControllerGroup armGroup = new SpeedControllerGroup(armTop, armBottom);
 
     arm = new Arm(armGroup);
-
     wrist = new Wrist(MotorType.kBrushless);
-
     claw = new Claw();
-
     intake = new Intake();
+    oi = new OI();
+    vision = new Vision();
 
     // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
     //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
-
-    armJoystickTrigger = new JoystickTrigger(oi.operatorStickLeft, 0.1);
-    intakeJoystickTrigger = new JoystickTrigger(oi.operatorStickRight, 0.1);
   }
 
   /**
@@ -155,9 +144,6 @@ public class Robot extends TimedRobot {
     oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.medium, Gamepiece.cargo));
     oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
     oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
-
-    armJoystickTrigger.whenActive(new MoveArmTeleop());
-    intakeJoystickTrigger.whenActive(new MoveIntakeTeleop());
   }
 
   /**
