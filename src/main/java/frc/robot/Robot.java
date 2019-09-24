@@ -1,19 +1,13 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.*;
+import frc.robot.commands.GrabGamepiece;
+import frc.robot.commands.MoveArmToAngle;
+import frc.robot.commands.MoveArmToLevel;
+import frc.robot.commands.ToggleClaw;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Gamepiece;
 import frc.robot.utils.Level;
@@ -35,6 +29,7 @@ public class Robot extends TimedRobot {
   public static Wrist wrist;
   public static OI oi;
   public static Vision vision;
+  Compressor compressor;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -42,31 +37,33 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Spark leftTop = new Spark(RobotMap.DRIVE_LEFT_TOP_CHANNEL);
-    Spark leftFront = new Spark(RobotMap.DRIVE_LEFT_FRONT_CHANNEL);
-    Spark leftBack = new Spark(RobotMap.DRIVE_LEFT_BACK_CHANNEL);
-    SpeedControllerGroup leftGroup = new SpeedControllerGroup(leftTop, leftFront, leftBack);
-
-    Spark rightTop = new Spark(RobotMap.DRIVE_RIGHT_TOP_CHANNEL);
-    Spark rightFront = new Spark(RobotMap.DRIVE_RIGHT_FRONT_CHANNEL);
-    Spark rightBack = new Spark(RobotMap.DRIVE_RIGHT_BACK_CHANNEL);
-    SpeedControllerGroup rightGroup = new SpeedControllerGroup(rightTop, rightFront, rightBack);
-
-    driveBase = new DriveBase(leftGroup, rightGroup);
-
-    Spark armTop = new Spark(RobotMap.ARM_MOTOR_TOP_CHANNEL);
-    Spark armBottom = new Spark(RobotMap.ARM_MOTOR_BOTTOM_CHANNEL);
-    SpeedControllerGroup armGroup = new SpeedControllerGroup(armTop, armBottom);
-
-    arm = new Arm(armGroup);
-    wrist = new Wrist(MotorType.kBrushless);
+    
+    vision = new Vision();
+    driveBase = new DriveBase();
+    wrist = new Wrist();
+    arm = new Arm();
     claw = new Claw();
     intake = new Intake();
-    oi = new OI();
-    vision = new Vision();
-
     // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
     //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
+    oi = new OI();
+
+    oi.clawToggleButton.whenPressed(new ToggleClaw());
+    // oi.elevatorToggleButton.whenPressed(new ToggleElevator());
+    oi.elevatorToggleButton.whenActive(new MoveArmToAngle(90));
+
+    oi.hatchLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.hatch));
+    oi.hatchMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.hatch));
+    oi.hatchHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.hatch));
+    oi.hatchGrabButton.whenPressed(new GrabGamepiece(Gamepiece.hatch));
+
+    oi.cargoLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.cargo));
+    oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.cargo));
+    oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
+    oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
+    compressor = new Compressor();
+
+    compressor.stop();
   }
 
   /**
@@ -131,19 +128,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+  }
 
-    oi.clawToggleButton.whenPressed(new ToggleClaw());
-    // oi.elevatorToggleButton.whenPressed(new ToggleElevator());
-
-    oi.hatchLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.hatch));
-    oi.hatchMediumButton.whenPressed(new MoveArmToLevel(Level.medium, Gamepiece.hatch));
-    oi.hatchHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.hatch));
-    oi.hatchGrabButton.whenPressed(new GrabGamepiece(Gamepiece.hatch));
-
-    oi.cargoLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.cargo));
-    oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.medium, Gamepiece.cargo));
-    oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
-    oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
+  @Override
+  public void testInit() {
   }
 
   /**
@@ -151,5 +139,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
   }
 }

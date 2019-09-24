@@ -16,8 +16,8 @@ public class MoveIntakeTeleop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.moveArm(0.7 * Robot.oi.operatorStickLeft.getY());
-    Robot.intake.moveRoller(Robot.oi.operatorStickLeft.getX());
+    Robot.intake.moveArm(0.7 * Robot.oi.operatorStickRight.getX());
+    Robot.intake.moveRoller(Robot.oi.operatorStickRight.getY());
   }
 
   // Make this return true when this Command no longer needs to run execute()

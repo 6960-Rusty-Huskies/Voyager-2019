@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class DriveTeleop extends Command {
+
+  private double speed = Robot.oi.driverStickLeft.getY();
+  private double turn = Robot.oi.driverStickRight.getX();
+
   public DriveTeleop() {
     requires(Robot.driveBase);
   }
@@ -17,12 +21,8 @@ public class DriveTeleop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    double speed = Robot.oi.driverStickLeft.getY();
-    double turn = Robot.oi.driverStickRight.getX();
 
     Robot.driveBase.manualDrive(speed, turn);
-
   }
 
   // Make this return true when this Command no longer needs to run execute()

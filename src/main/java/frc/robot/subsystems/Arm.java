@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -16,33 +18,35 @@ public class Arm extends PIDSubsystem {
 
   private SpeedController motor;
   private Encoder encoder;
-  private double lastAngle;
 
-  public Arm(SpeedController speedController) {
-    super("Arm", - 1 / 360, 0.0, 0.0);
-    setInputRange(-0.5, 0.5);
-    this.
+  public Arm() {
+    super("Arm", 2.0, 0.0, 0.0);
+    setAbsoluteTolerance(0.5);
+    setInputRange(0.0, 360.0);
+    enable();
+    getPIDController().setContinuous();
 
-    motor = speedController;
+    Spark top = new Spark(RobotMap.ARM_MOTOR_TOP_CHANNEL);
+    Spark bottom = new Spark(RobotMap.ARM_MOTOR_BOTTOM_CHANNEL);
+
+    motor = new SpeedControllerGroup(top, bottom);
+
     encoder = new Encoder(RobotMap.ARM_ENCODER_A_CHANNEL, RobotMap.ARM_ENCODER_B_CHANNEL);
-    encoder.setDistancePerPulse(360 / (RobotMap.ARM_ENCODER_PPR * RobotMap.ARM_GEAR_RATIO));
-
-    lastAngle = getAngle();
+    encoder.setDistancePerPulse(360.0 / (RobotMap.ARM_ENCODER_PPR * RobotMap.ARM_GEAR_RATIO));
+    encoder.setSamplesToAverage(7);
+    encoder.setReverseDirection(true);
   }
 
   public void setMotor(double speed) {
     motor.set(speed);
-    lastAngle = getAngle();
   }
 
   public void moveTo(double degrees) {
     if (!Robot.wrist.isTucked())
       Robot.wrist.tuck();
 
-    else {
-      double diff = degrees - getAngle();
-      setMotor(diff / 360);
-    }
+    else
+      setSetpoint(degrees);
   }
 
   public double getAngle() {
@@ -56,11 +60,11 @@ public class Arm extends PIDSubsystem {
 
   @Override
   public double returnPIDInput() {
-    return encoder.getDistance() - lastAngle;
+    return getAngle();
   }
 
   @Override
   public void usePIDOutput(double output) {
-    motor.set(output);
+    motor.pidWrite(output);
   }
 }
