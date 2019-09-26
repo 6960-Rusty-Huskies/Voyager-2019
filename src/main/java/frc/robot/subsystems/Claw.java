@@ -10,9 +10,6 @@ import frc.robot.commands.ToggleClaw;
  * The pneumatic hooks that hold cargo and hatches.
  */
 public class Claw extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
   private DoubleSolenoid solenoid;
 
   public Claw() {

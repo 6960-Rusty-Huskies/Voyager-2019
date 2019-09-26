@@ -9,9 +9,6 @@ import frc.robot.RobotMap;
  * The pneumatic actuators that lift the robot to get us to level 3.
  */
 public class Elevator extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
   private DoubleSolenoid leftSolenoid;
   private DoubleSolenoid rightSolenoid;
 
@@ -46,6 +43,5 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // setDefaultCommand(new ToggleElevator());
   }
 }

@@ -24,16 +24,15 @@ public class DriveBase extends Subsystem {
 
   public void manualDrive(double speed, double turn) {
     if (Math.abs(speed) < 0.1)
-      speed = 0;
+      speed = 0.;
     if (Math.abs(turn) < 0.1)
-      turn = 0;
+      turn = 0.;
 
     drive.arcadeDrive(speed, turn);
   }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
     setDefaultCommand(new DriveTeleop());
   }
 }

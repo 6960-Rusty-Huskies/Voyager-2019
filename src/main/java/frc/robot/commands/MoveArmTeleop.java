@@ -1,9 +1,12 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class MoveArmTeleop extends Command {
+  private Joystick operatorStickLeft = Robot.oi.operatorStickLeft;
+
   public MoveArmTeleop() {
     requires(Robot.arm);
     requires(Robot.wrist);
@@ -16,10 +19,22 @@ public class MoveArmTeleop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (!Robot.wrist.isTucked())
-      Robot.wrist.tuck();
-    else
-      Robot.arm.setMotor(Robot.oi.operatorStickRight.getY());
+    if (Math.abs(operatorStickLeft.getY()) > 0.1) {
+
+      if (Robot.arm.getPIDController().isEnabled()) {
+        Robot.arm.disable();
+      } else {
+        Robot.arm.setMotor(operatorStickLeft.getY());
+      }
+
+    }
+
+    else if (!Robot.arm.getPIDController().isEnabled()) {
+
+      Robot.arm.setSetpoint(Robot.arm.getAngle());
+      Robot.arm.enable();
+      
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

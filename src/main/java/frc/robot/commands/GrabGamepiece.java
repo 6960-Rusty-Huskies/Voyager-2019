@@ -14,10 +14,10 @@ public class GrabGamepiece extends CommandGroup {
   public GrabGamepiece(Gamepiece gamepiece) {
     double height;
     if(gamepiece == Gamepiece.cargo) height = 19.0;
-    else height = 42.0;
+    else height = 42.;
 
-    double armAngleGoal = 360 - Math.toDegrees(Math.acos((armHeight - height) / armRadius));
-    double wristAngleGoal = armAngleGoal + 90;
+    double armAngleGoal = 360. - Math.toDegrees(Math.acos((armHeight - height) / armRadius));
+    double wristAngleGoal = armAngleGoal + 90.;
 
     addParallel(new SetClaw(false));
     addSequential(new MoveArmToAngle(armAngleGoal));

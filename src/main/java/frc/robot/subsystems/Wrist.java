@@ -9,35 +9,35 @@ import frc.robot.RobotMap;
 import frc.robot.commands.MoveWristTeleop;
 
 /**
- * Add your docs here.
+ * The smaller appendage attached to the end of the Arm, which holds the Claw.
  */
 public class Wrist extends PIDSubsystem {
 
   private CANSparkMax motor;
   private CANEncoder encoder;
-  private double lastAngle;
 
   /**
-   * Add your docs here.
+   * The smaller appendage attached to the end of the Arm, which holds the Claw.
    */
-  public Wrist(MotorType motorType) {
-    super("Wrist", -1 / 360, 0.0, 0.0);
-    motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, motorType);
+  public Wrist() {
+    super("Wrist", 2., 0., 0.);
+    motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, MotorType.kBrushless);
     encoder = motor.getEncoder();
-    encoder.setPositionConversionFactor(RobotMap.WRIST_GEAR_RATIO / 360);
-    lastAngle = getAngle();
+    encoder.setPositionConversionFactor(RobotMap.WRIST_GEAR_RATIO / 360.);
+
+    setAbsoluteTolerance(5.);
+    setInputRange(0., 360.);
+    setOutputRange(-0.5, 0.5);
+    getPIDController().setContinuous();
+    enable();
   }
 
   public void setMotor(double speed) {
     motor.set(speed);
-    lastAngle = getAngle();
   }
 
   public void moveTo(double degrees) {
-    double diff = degrees - getAngle();
-    
-    setMotor(diff / 360);
-    lastAngle = getAngle();
+    setSetpoint(degrees);
   }
 
   public double getAngle() {
@@ -45,15 +45,11 @@ public class Wrist extends PIDSubsystem {
   }
 
   public void tuck() {
-    if (isTucked())
-      return;
-
-    setMotor(-0.5);
-    lastAngle = getAngle();
+    setSetpoint(0.);
   }
 
   public boolean isTucked() {
-    return encoder.getPosition() < 5;
+    return getSetpoint() == 0. && onTarget();
   }
 
   @Override
@@ -63,11 +59,11 @@ public class Wrist extends PIDSubsystem {
 
   @Override
   protected double returnPIDInput() {
-    return encoder.getPosition() - lastAngle;
+    return getAngle() - 180.;
   }
 
   @Override
   protected void usePIDOutput(double output) {
-    motor.set(output); 
+    motor.pidWrite(output);
   }
 }

@@ -22,13 +22,13 @@ public class MoveArmToLevel extends CommandGroup {
    * Moves the arm to the specified level of the rocket, for the specified gamepiece.
    */
   public MoveArmToLevel(Level level, Gamepiece gamepiece) {
-    double initial = 0;
+    double initial = 0.;
     int multiplier = 0;
-    double spaceBetween = 28.0;
+    double spaceBetween = 28.;
 
     switch (gamepiece) {
       case cargo: initial = 27.5;
-      case hatch: initial = 19.0;
+      case hatch: initial = 19.;
     }
 
     switch(level) {
@@ -40,7 +40,7 @@ public class MoveArmToLevel extends CommandGroup {
     heightGoal = initial + multiplier * spaceBetween;
 
     double armAngleGoal = Math.toDegrees(Math.acos((armHeight - heightGoal) / armRadius));
-    double wristAngleGoal = armAngleGoal - 90;
+    double wristAngleGoal = armAngleGoal - 90.;
 
     addSequential(new MoveArmToAngle(armAngleGoal));
     addSequential(new MoveWristToAngle(wristAngleGoal));

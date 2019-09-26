@@ -23,18 +23,18 @@ public class MoveWristToAngle extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.wrist.moveTo(angleGoal);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.wrist.moveTo(angleGoal);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(angleGoal - Robot.wrist.getAngle()) < 5;
+    return Robot.wrist.onTarget();
   }
 
   // Called once after isFinished returns true

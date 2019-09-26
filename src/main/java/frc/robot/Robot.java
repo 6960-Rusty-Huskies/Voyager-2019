@@ -7,14 +7,19 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import frc.robot.commands.GrabGamepiece;
+import frc.robot.commands.MoveArmToLevel;
+import frc.robot.commands.ToggleClaw;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Wrist;
 import frc.robot.utils.Gamepiece;
 import frc.robot.utils.Level;
 
@@ -35,6 +40,7 @@ public class Robot extends TimedRobot {
   public static Wrist wrist;
   public static OI oi;
   public static Vision vision;
+  public static Compressor compressor;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -42,28 +48,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Spark leftTop = new Spark(RobotMap.DRIVE_LEFT_TOP_CHANNEL);
-    Spark leftFront = new Spark(RobotMap.DRIVE_LEFT_FRONT_CHANNEL);
-    Spark leftBack = new Spark(RobotMap.DRIVE_LEFT_BACK_CHANNEL);
-    SpeedControllerGroup leftGroup = new SpeedControllerGroup(leftTop, leftFront, leftBack);
-
-    Spark rightTop = new Spark(RobotMap.DRIVE_RIGHT_TOP_CHANNEL);
-    Spark rightFront = new Spark(RobotMap.DRIVE_RIGHT_FRONT_CHANNEL);
-    Spark rightBack = new Spark(RobotMap.DRIVE_RIGHT_BACK_CHANNEL);
-    SpeedControllerGroup rightGroup = new SpeedControllerGroup(rightTop, rightFront, rightBack);
-
-    driveBase = new DriveBase(leftGroup, rightGroup);
-
-    Spark armTop = new Spark(RobotMap.ARM_MOTOR_TOP_CHANNEL);
-    Spark armBottom = new Spark(RobotMap.ARM_MOTOR_BOTTOM_CHANNEL);
-    SpeedControllerGroup armGroup = new SpeedControllerGroup(armTop, armBottom);
-
-    arm = new Arm(armGroup);
-    wrist = new Wrist(MotorType.kBrushless);
+    arm = new Arm();
+    wrist = new Wrist();
     claw = new Claw();
     intake = new Intake();
     oi = new OI();
     vision = new Vision();
+    compressor = new Compressor();
+    compressor.stop();
 
     // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
     //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
