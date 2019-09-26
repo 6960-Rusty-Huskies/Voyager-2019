@@ -16,8 +16,10 @@ public class MoveArmTeleop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.arm.setMotor(Robot.oi.operatorStickRight.getY());
-    Robot.wrist.setMotor(Robot.oi.operatorStickRight.getX());
+    if (!Robot.wrist.isTucked())
+      Robot.wrist.tuck();
+    else
+      Robot.arm.setMotor(Robot.oi.operatorStickRight.getY());
   }
 
   // Make this return true when this Command no longer needs to run execute()

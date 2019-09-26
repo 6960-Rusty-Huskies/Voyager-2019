@@ -3,38 +3,41 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.commands.Brake;
+
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.MoveWristTeleop;
 
 /**
- * Smaller appendage attached to the arm that holds the claw.
+ * Add your docs here.
  */
-public class Wrist extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+public class Wrist extends PIDSubsystem {
 
   private CANSparkMax motor;
   private CANEncoder encoder;
-  private double lastPos;
+  private double lastAngle;
 
+  /**
+   * Add your docs here.
+   */
   public Wrist(MotorType motorType) {
+    super("Wrist", -1 / 360, 0.0, 0.0);
     motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, motorType);
     encoder = motor.getEncoder();
     encoder.setPositionConversionFactor(RobotMap.WRIST_GEAR_RATIO / 360);
-    lastPos = getAngle();
+    lastAngle = getAngle();
   }
 
   public void setMotor(double speed) {
     motor.set(speed);
-    lastPos = getAngle();
+    lastAngle = getAngle();
   }
 
   public void moveTo(double degrees) {
     double diff = degrees - getAngle();
     
     setMotor(diff / 360);
-    lastPos = getAngle();
+    lastAngle = getAngle();
   }
 
   public double getAngle() {
@@ -46,7 +49,7 @@ public class Wrist extends Subsystem {
       return;
 
     setMotor(-0.5);
-    lastPos = getAngle();
+    lastAngle = getAngle();
   }
 
   public boolean isTucked() {
@@ -55,6 +58,16 @@ public class Wrist extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new Brake(this, motor, 0.15, lastPos, getAngle()));
+    setDefaultCommand(new MoveWristTeleop());
+  }
+
+  @Override
+  protected double returnPIDInput() {
+    return encoder.getPosition() - lastAngle;
+  }
+
+  @Override
+  protected void usePIDOutput(double output) {
+    motor.set(output); 
   }
 }
