@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class DriveTeleop extends Command {
+
+  private double speed = Robot.oi.driverStickLeft.getY();
+  private double turn = Robot.oi.driverStickRight.getX();
+
   public DriveTeleop() {
     requires(Robot.driveBase);
   }
@@ -15,12 +19,8 @@ public class DriveTeleop extends Command {
 
   @Override
   protected void execute() {
-    
-    double speed = Robot.oi.driverStickLeft.getY();
-    double turn = Robot.oi.driverStickRight.getX();
 
     Robot.driveBase.manualDrive(speed, turn);
-
   }
 
   @Override

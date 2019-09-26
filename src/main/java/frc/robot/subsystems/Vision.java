@@ -24,7 +24,7 @@ public class Vision extends Subsystem {
   }
 
   public void setFrontCamera() {
-    server.setSource(frontCamera); 
+    server.setSource(frontCamera);
   }
 
   public void setBackCamera() {

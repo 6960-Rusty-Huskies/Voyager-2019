@@ -40,8 +40,7 @@ public class AutoSwitchCamera extends Command {
       Robot.vision.setFrontCamera();
     } else if (val < -0.1) {
       Robot.vision.setBackCamera();
-    } else
-      Robot.vision.setFrontCamera();
+    }
   }
 
   @Override
@@ -55,6 +54,5 @@ public class AutoSwitchCamera extends Command {
 
   @Override
   protected void interrupted() {
-    end();
   }
 }

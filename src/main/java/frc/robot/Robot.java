@@ -1,16 +1,10 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.commands.GrabGamepiece;
+import frc.robot.commands.MoveArmToAngle;
 import frc.robot.commands.MoveArmToLevel;
 import frc.robot.commands.ToggleClaw;
 import frc.robot.subsystems.Arm;
@@ -59,6 +53,24 @@ public class Robot extends TimedRobot {
 
     // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
     //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
+    oi = new OI();
+
+    oi.clawToggleButton.whenPressed(new ToggleClaw());
+    // oi.elevatorToggleButton.whenPressed(new ToggleElevator());
+    oi.elevatorToggleButton.whenActive(new MoveArmToAngle(90));
+
+    oi.hatchLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.hatch));
+    oi.hatchMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.hatch));
+    oi.hatchHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.hatch));
+    oi.hatchGrabButton.whenPressed(new GrabGamepiece(Gamepiece.hatch));
+
+    oi.cargoLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.cargo));
+    oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.cargo));
+    oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
+    oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
+    compressor = new Compressor();
+
+    compressor.stop();
   }
 
   /**
@@ -123,19 +135,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+  }
 
-    oi.clawToggleButton.whenPressed(new ToggleClaw());
-    // oi.elevatorToggleButton.whenPressed(new ToggleElevator());
-
-    oi.hatchLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.hatch));
-    oi.hatchMediumButton.whenPressed(new MoveArmToLevel(Level.medium, Gamepiece.hatch));
-    oi.hatchHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.hatch));
-    oi.hatchGrabButton.whenPressed(new GrabGamepiece(Gamepiece.hatch));
-
-    oi.cargoLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.cargo));
-    oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.medium, Gamepiece.cargo));
-    oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
-    oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
+  @Override
+  public void testInit() {
   }
 
   /**
@@ -143,5 +146,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
   }
 }
