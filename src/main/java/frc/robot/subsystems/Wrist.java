@@ -60,7 +60,7 @@ public class Wrist extends PIDSubsystem {
 
   @Override
   protected double returnPIDInput() {
-    return getAngle() - 180.;
+    return getAngle();
   }
 
   @Override
