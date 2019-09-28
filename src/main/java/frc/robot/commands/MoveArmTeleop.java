@@ -30,9 +30,9 @@ public class MoveArmTeleop extends Command {
     }
 
     else if (!Robot.arm.getPIDController().isEnabled()) {
-
-      Robot.arm.setSetpoint(Robot.arm.getAngle());
+      
       Robot.arm.enable();
+      Robot.arm.setSetpoint(Robot.arm.getAngle());
       
     }
   }

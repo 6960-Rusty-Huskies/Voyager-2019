@@ -19,7 +19,6 @@ public class DriveTeleop extends Command {
 
   @Override
   protected void execute() {
-
     Robot.driveBase.manualDrive(speed, turn);
   }
 

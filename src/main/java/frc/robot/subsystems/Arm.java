@@ -20,7 +20,8 @@ public class Arm extends PIDSubsystem {
    * The arm connected to the frame of the robot that holds the wrist.
    */
   public Arm() {
-    super("Arm", 2., 0., 0.);
+    super("Arm", 0.06, 0.,  0.);
+
 
     encoder = new Encoder(RobotMap.ARM_ENCODER_A_CHANNEL, RobotMap.ARM_ENCODER_B_CHANNEL);
     encoder.setDistancePerPulse(360. / (RobotMap.ARM_ENCODER_PPR * RobotMap.ARM_GEAR_RATIO));
@@ -31,11 +32,11 @@ public class Arm extends PIDSubsystem {
     Spark bottom = new Spark(RobotMap.ARM_MOTOR_BOTTOM_CHANNEL);
 
     motor = new SpeedControllerGroup(top, bottom);
+    motor.setInverted(true);
 
-    setAbsoluteTolerance(5.);
-    setInputRange(0., 360.);
-    setOutputRange(-0.5, 0.5);
-    getPIDController().setContinuous();
+    setAbsoluteTolerance(0.5);
+    setInputRange(0., 270.);
+    setOutputRange(-0.6, 0.6);
     enable();
   }
 
@@ -43,14 +44,16 @@ public class Arm extends PIDSubsystem {
     if (!Robot.wrist.isTucked()) {
       Robot.wrist.tuck();
     }
-    motor.set(speed);
+    else {
+      motor.set(speed * 0.5);
+    }
   }
 
   public void moveTo(double degrees) {
     if (!Robot.wrist.isTucked()) {
-      Robot.wrist.tuck();
+       Robot.wrist.tuck();
     } else {
-      setSetpoint(degrees);
+       setSetpoint(degrees);
     }
   }
 
@@ -65,7 +68,7 @@ public class Arm extends PIDSubsystem {
 
   @Override
   public double returnPIDInput() {
-    return getAngle() - 180.;
+    return getAngle();
   }
 
   @Override
