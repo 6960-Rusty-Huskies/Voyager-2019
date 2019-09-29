@@ -25,8 +25,6 @@ public class MoveArmToLevel extends CommandGroup {
     }
 
     double wristAngleGoal = armAngleGoal + 90.;
-    while(Math.abs(wristAngleGoal) % 360 > 0) wristAngleGoal += Math.signum(wristAngleGoal) * 360;
-    
 
     addSequential(new MoveArmToAngle(armAngleGoal));
     addSequential(new MoveWristToAngle(wristAngleGoal));

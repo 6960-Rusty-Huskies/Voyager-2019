@@ -5,8 +5,6 @@ import frc.robot.Robot;
 
 public class MoveWristTeleop extends Command {
 
-  private double wristStickValue = Robot.oi.operatorStickLeft.getX();
-
   public MoveWristTeleop() {
     requires(Robot.wrist);
   }
@@ -19,12 +17,16 @@ public class MoveWristTeleop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
+    double wristStickValue = Robot.oi.operatorStickLeft.getX();
+    
     if (Math.abs(wristStickValue) > 0.1) {
 
       if (Robot.wrist.getPIDController().isEnabled()) {
         Robot.wrist.disable();
+        
+      Robot.wrist.setMotor(wristStickValue * 0.2);
       }
-      Robot.wrist.setMotor(Math.signum(wristStickValue) * 0.2);
 
     } else if (!Robot.wrist.getPIDController().isEnabled()) {
 

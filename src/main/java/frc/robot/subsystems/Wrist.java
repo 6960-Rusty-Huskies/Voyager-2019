@@ -20,20 +20,19 @@ public class Wrist extends PIDSubsystem {
    * The smaller appendage attached to the end of the Arm, which holds the Claw.
    */
   public Wrist() {
-    super("Wrist", 2., 0., 0.);
+    super("Wrist", .015, 0., 0.);
     motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, MotorType.kBrushless);
     encoder = motor.getEncoder();
-    encoder.setPositionConversionFactor(RobotMap.WRIST_GEAR_RATIO / 360.);
+    encoder.setPositionConversionFactor(360. / (RobotMap.WRIST_GEAR_RATIO * 42.));
 
-    setAbsoluteTolerance(5.);
-    setInputRange(0., 360.);
-    setOutputRange(-0.5, 0.5);
-    getPIDController().setContinuous();
+    setAbsoluteTolerance(.5);
+    setInputRange(0., 270.);
+    setOutputRange(-0.2, 0.2);
     enable();
   }
 
   public void setMotor(double speed) {
-    motor.set(speed);
+    motor.set(speed * .5);
   }
 
   public void moveTo(double degrees) {
