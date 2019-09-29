@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.GrabGamepiece;
 import frc.robot.commands.MoveArmToAngle;
 import frc.robot.commands.MoveArmToLevel;
@@ -57,7 +58,7 @@ public class Robot extends TimedRobot {
 
     oi.clawToggleButton.whenPressed(new ToggleClaw());
     // oi.elevatorToggleButton.whenPressed(new ToggleElevator());
-    oi.elevatorToggleButton.whenActive(new MoveArmToAngle(90));
+    oi.elevatorToggleButton.whenPressed(new MoveArmToAngle(90));
 
     oi.hatchLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.hatch));
     oi.hatchMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.hatch));
@@ -68,8 +69,8 @@ public class Robot extends TimedRobot {
     oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.cargo));
     oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
     oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
-    compressor = new Compressor();
 
+    compressor = new Compressor();
     compressor.stop();
   }
 
@@ -84,6 +85,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putString("DB/String 0", Double.toString(wrist.getAngle()));
   }
 
   /**
