@@ -19,7 +19,7 @@ public class MoveWristTeleop extends Command {
   protected void execute() {
     
     double wristStickValue = Robot.oi.operatorStickLeft.getX();
-    
+
     if (Math.abs(wristStickValue) > 0.1) {
 
       if (Robot.wrist.getPIDController().isEnabled()) {
@@ -30,8 +30,8 @@ public class MoveWristTeleop extends Command {
 
     } else if (!Robot.wrist.getPIDController().isEnabled()) {
 
-      Robot.wrist.setSetpoint(Robot.wrist.getAngle());
       Robot.wrist.enable();
+      Robot.wrist.setSetpoint(Robot.wrist.getAngle());
       
     }
   }

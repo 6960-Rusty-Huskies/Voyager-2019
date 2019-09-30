@@ -21,6 +21,8 @@ public class MoveArmToAngle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(Math.abs(Robot.oi.operatorStickLeft.getMagnitude()) > 0.1)
+      end();
   }
 
   // Make this return true when this Command no longer needs to run execute()
