@@ -75,7 +75,7 @@ public class RobotMap {
   /** The gear ratio of the arm encoder. Used to determine the distance per pulse of the arm. */
   public static final double ARM_GEAR_RATIO = 1 / 1;
   /** The gear ratio of the wrist encoder. Used in the setDistancePerPulse() function. */
-  public static final double WRIST_GEAR_RATIO = 72.0 / 17.0;
+  public static final double WRIST_GEAR_RATIO = 10 * (72. / 17.);
 
   // Misc. constants
 

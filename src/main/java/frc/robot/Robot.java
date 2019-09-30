@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +34,6 @@ public class Robot extends TimedRobot {
   public static Wrist wrist;
   public static OI oi;
   public static Vision vision;
-  public static Compressor compressor;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -49,8 +47,6 @@ public class Robot extends TimedRobot {
     intake = new Intake();
     oi = new OI();
     vision = new Vision();
-    compressor = new Compressor();
-    compressor.stop();
 
     // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
     //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
@@ -69,9 +65,6 @@ public class Robot extends TimedRobot {
     oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.cargo));
     oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
     oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
-
-    compressor = new Compressor();
-    compressor.stop();
   }
 
   /**
@@ -85,7 +78,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putString("DB/String 0", Double.toString(wrist.getAngle()));
+    SmartDashboard.putString("DB/String 0", "WE: " + Double.toString(wrist.getAngle()));
+    SmartDashboard.putString("DB/String 1", "WS: " + Double.toString(wrist.getSetpoint()));
+    SmartDashboard.putString("DB/String 2", "AE: " + Double.toString(arm.getAngle()));
+    SmartDashboard.putString("DB/String 3", "AS: " + Double.toString(arm.getSetpoint()));
+
+
   }
 
   /**

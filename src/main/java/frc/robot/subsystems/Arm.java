@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveArmTeleop;
 
@@ -41,20 +40,20 @@ public class Arm extends PIDSubsystem {
   }
 
   public void setMotor(double speed) {
-    if (!Robot.wrist.isTucked()) {
-      Robot.wrist.tuck();
-    }
-    else {
-      motor.set(speed * 0.5);
-    }
+    // if (!Robot.wrist.isTucked()) {
+    //   Robot.wrist.tuck();
+    // }
+    // else {
+       motor.set(speed * 0.5);
+    // }
   }
 
   public void moveTo(double degrees) {
-    if (!Robot.wrist.isTucked()) {
-       Robot.wrist.tuck();
-    } else {
-       setSetpoint(degrees);
-    }
+    // if (!Robot.wrist.isTucked()) {
+    //    Robot.wrist.tuck();
+    // } else {
+        setSetpoint(degrees);
+    // }
   }
 
   public double getAngle() {
