@@ -44,18 +44,20 @@ public class MoveArmToLevel extends CommandGroup {
                 break;
         }
 
-        // Always tuck when the arm moves, then move wrist to proper position after arm gets to final destination
-        addParallel(new MoveWristToAngle(2));
+        // This will work on the front side only... assumes will never go outside max perimeter if wrist at 90 degrees
+        if (Robot.wrist.getAngle() > 80) {
+          addSequential(new MoveWristToAngle(20));
+        }
         addSequential(new MoveArmToAngle(armAngleGoal));
         addSequential(new MoveWristToAngle(wristAngleGoal));
     }
 
-  @Override
-  protected boolean isFinished() {
-      if (super.isFinished()) {
-        return true;
-      } else {
-        return Math.round(Robot.oi.operatorStickLeft.getMagnitude()) != 0;
-      }
-  }
+    @Override
+    protected boolean isFinished() {
+        if (super.isFinished()) {
+            return true;
+        } else {
+            return Math.round(Robot.oi.operatorStickLeft.getMagnitude()) != 0;
+        }
+    }
 }
