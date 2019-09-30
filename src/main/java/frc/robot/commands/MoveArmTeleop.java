@@ -20,7 +20,7 @@ public class MoveArmTeleop extends Command {
       if (currentStickValue != 0) {
         // User is moving arm, stop PID Controller
         Robot.arm.disable();
-        Robot.arm.setMotor(currentStickValue * 0.2);
+        Robot.arm.setMotor(currentStickValue);
       } else {
         // Stop arm and enable PID Controller
         Robot.arm.setMotor(0);
