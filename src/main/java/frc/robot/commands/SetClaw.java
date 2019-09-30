@@ -12,7 +12,6 @@ public class SetClaw extends InstantCommand {
     toSet = open;
   }
 
-  // Called once this Command executes
   @Override
   protected void execute() {
     Robot.claw.set(toSet);

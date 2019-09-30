@@ -40,7 +40,6 @@ public class Wrist extends PIDSubsystem {
     setSetpoint(degrees);
   }
 
-  /** The current angle reading of the encoder. */
   public double getAngle() {
     return encoder.getPosition();
   }

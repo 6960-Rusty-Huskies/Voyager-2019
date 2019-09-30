@@ -17,10 +17,6 @@ public class AutoSwitchCamera extends Command {
   }
 
   @Override
-  protected void initialize() {
-  }
-
-  @Override
   protected void execute() {
     double val = 0;
 
@@ -48,11 +44,4 @@ public class AutoSwitchCamera extends Command {
     return false;
   }
 
-  @Override
-  protected void end() {
-  }
-
-  @Override
-  protected void interrupted() {
-  }
 }

@@ -5,50 +5,37 @@ import frc.robot.Robot;
 
 public class MoveWristTeleop extends Command {
 
+  private long previousStickValue = 0;
+
   public MoveWristTeleop() {
     requires(Robot.wrist);
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
-
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    double wristStickValue = Robot.oi.operatorStickLeft.getX();
+    long currentStickValue = Math.round(Robot.oi.operatorStickLeft.getX());
 
-    if (Math.abs(wristStickValue) > 0.1) {
-
-      if (Robot.wrist.getPIDController().isEnabled()) {
+    // Check to see if joystick has changed
+    if (currentStickValue != previousStickValue) {
+      if (currentStickValue != 0) {
+        // User is moving wrist, stop PID Controller
         Robot.wrist.disable();
-        
-      Robot.wrist.setMotor(wristStickValue * 0.2);
+        Robot.wrist.setMotor(currentStickValue * 0.2);
+      } else {
+        // Stop wrist and enable PID Controller
+        Robot.wrist.setMotor(0);
+        Robot.wrist.enable();
+        Robot.wrist.setSetpoint(Robot.wrist.getAngle());
       }
-
-    } else if (!Robot.wrist.getPIDController().isEnabled()) {
-
-      Robot.wrist.enable();
-      Robot.wrist.setSetpoint(Robot.wrist.getAngle());
-      
+      previousStickValue = currentStickValue;
     }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     end();

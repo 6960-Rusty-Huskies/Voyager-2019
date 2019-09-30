@@ -9,7 +9,6 @@ public class ToggleClaw extends InstantCommand {
     requires(Robot.claw);
   }
 
-  // Called once this command executes
   @Override
   protected void initialize() {
     Robot.claw.toggle();

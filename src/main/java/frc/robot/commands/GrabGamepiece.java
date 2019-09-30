@@ -5,9 +5,7 @@ import frc.robot.RobotMap;
 import frc.robot.utils.Gamepiece;
 
 public class GrabGamepiece extends CommandGroup {
-  private static final double armRadius = RobotMap.ARM_RADIUS;
-  private static final double armHeight = RobotMap.ARM_HEIGHT;
-  
+
   /**
    * Moves the arm to the level needed to grab the specified gamepiece from the
    * human player station.
@@ -17,7 +15,7 @@ public class GrabGamepiece extends CommandGroup {
     if(gamepiece == Gamepiece.cargo) height = 19.0;
     else height = 42.;
 
-    double armAngleGoal = 360. - Math.toDegrees(Math.acos((armHeight - height) / armRadius));
+    double armAngleGoal = 360. - Math.toDegrees(Math.acos((RobotMap.ARM_HEIGHT - height) / RobotMap.ARM_RADIUS));
     double wristAngleGoal = armAngleGoal + 90.;
 
     addParallel(new SetClaw(false));

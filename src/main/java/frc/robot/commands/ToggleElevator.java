@@ -9,7 +9,6 @@ public class ToggleElevator extends InstantCommand {
     requires(Robot.elevator);
   }
 
-  // Called once this Command executes
   @Override
   protected void initialize() {
     Robot.elevator.toggle();
