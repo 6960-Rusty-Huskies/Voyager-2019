@@ -13,6 +13,12 @@ import frc.robot.commands.MoveWristTeleop;
  */
 public class Wrist extends PIDSubsystem {
 
+  // todo: these numbers all have to be verified... currently just a rough estimate
+  private static final double SAFE_WRIST_ANGLE_LOW = 20.0;
+  private static final double SAFE_WRIST_ANGLE_HIGH = 60.0;
+  // This would be 180 if we had actual angle
+  private static final double WRIST_STRAIGHT_ANGLE = 40.0;
+
   private CANSparkMax motor;
   private CANEncoder encoder;
 
@@ -66,4 +72,28 @@ public class Wrist extends PIDSubsystem {
   protected void usePIDOutput(double output) {
     motor.pidWrite(output);
   }
+
+  public double nearestWristSafePosition(double currentWristAngle) {
+    if (currentWristAngle <= WRIST_STRAIGHT_ANGLE) {
+      return Math.min(currentWristAngle, SAFE_WRIST_ANGLE_LOW);
+    } else {
+      return Math.max(currentWristAngle, SAFE_WRIST_ANGLE_HIGH);
+    }
+  }
+
+  public boolean wristNeedsToFlip(double currentWristAngle, double wristAngleGoal) {
+    return (currentWristAngle < WRIST_STRAIGHT_ANGLE && wristAngleGoal >= WRIST_STRAIGHT_ANGLE)
+            || (currentWristAngle > WRIST_STRAIGHT_ANGLE && wristAngleGoal <= WRIST_STRAIGHT_ANGLE);
+  }
+
+  /**
+   * Use this to check to see if we are moving into an unsafe position... only useful if Arm is in the unsafe zone.
+   *
+   * @param wristAngleProjection - Projected wrist angle/where wrist is moving to next.
+   * @return Whether or not the wrist will be moving into an unsafe position.
+   */
+  public boolean isMovingToUnsafePosition(double wristAngleProjection) {
+    return (wristAngleProjection > SAFE_WRIST_ANGLE_LOW && wristAngleProjection < SAFE_WRIST_ANGLE_HIGH);
+  }
+
 }

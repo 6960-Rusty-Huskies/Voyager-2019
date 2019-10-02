@@ -13,8 +13,6 @@ import frc.robot.commands.DriveTeleop;
  */
 public class DriveBase extends Subsystem {
 
-  private SpeedController leftMotor;
-  private SpeedController rightMotor;
   private DifferentialDrive drive;
 
   public DriveBase() {
@@ -28,10 +26,7 @@ public class DriveBase extends Subsystem {
     Spark rightBack = new Spark(RobotMap.DRIVE_RIGHT_BACK_CHANNEL);
     SpeedControllerGroup rightGroup = new SpeedControllerGroup(rightTop, rightFront, rightBack);
 
-    leftMotor = leftGroup;
-    rightMotor = rightGroup;
-
-    drive = new DifferentialDrive(leftMotor, rightMotor);
+    drive = new DifferentialDrive(leftGroup, rightGroup);
   }
 
   public void manualDrive(double speed, double turn) {
