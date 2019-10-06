@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class DriveTeleop extends Command {
-
   public DriveTeleop() {
     requires(Robot.driveBase);
   }

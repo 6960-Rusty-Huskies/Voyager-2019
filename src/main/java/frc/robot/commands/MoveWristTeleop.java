@@ -30,13 +30,13 @@ public class MoveWristTeleop extends Command {
 
         // Check to see if joystick has changed
         if (currentStickValue != previousStickValue) {
-            if (currentStickValue != 0) {
+            if (currentStickValue != 0.) {
                 // User is moving wrist, stop PID Controller
                 Robot.wrist.disable();
                 Robot.wrist.setMotor(currentStickValue);
             } else {
                 // Stop wrist and enable PID Controller
-                Robot.wrist.setMotor(0);
+                Robot.wrist.setMotor(0.);
                 Robot.wrist.enable();
                 Robot.wrist.setSetpoint(Robot.wrist.getAngle());
             }

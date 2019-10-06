@@ -7,13 +7,7 @@ import frc.robot.commands.GrabGamepiece;
 import frc.robot.commands.MoveArmToAngle;
 import frc.robot.commands.MoveArmToLevel;
 import frc.robot.commands.ToggleClaw;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.*;
 import frc.robot.utils.Gamepiece;
 import frc.robot.utils.Level;
 
@@ -30,7 +24,6 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static Claw claw;
   public static Elevator elevator;
-  public static Intake intake;
   public static Wrist wrist;
   public static OI oi;
   public static Vision vision;
@@ -44,9 +37,9 @@ public class Robot extends TimedRobot {
     arm = new Arm();
     wrist = new Wrist();
     claw = new Claw();
-    intake = new Intake();
     oi = new OI();
     vision = new Vision();
+    driveBase = new DriveBase();
 
     // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
     //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
@@ -78,12 +71,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putString("DB/String 0", "WE: " + Double.toString(wrist.getAngle()));
+    SmartDashboard.putNumber("DB/String 0", wrist.getAngle());
     SmartDashboard.putString("DB/String 1", "WS: " + Double.toString(wrist.getSetpoint()));
     SmartDashboard.putString("DB/String 2", "AE: " + Double.toString(arm.getAngle()));
     SmartDashboard.putString("DB/String 3", "AS: " + Double.toString(arm.getSetpoint()));
-
-
   }
 
   /**
@@ -93,6 +84,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+
   }
 
   @Override
@@ -127,6 +119,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    arm.setSetpoint(arm.getAngle());
+    wrist.setSetpoint(wrist.getAngle());
   }
 
   /**

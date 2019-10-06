@@ -19,27 +19,19 @@ public class RobotMap {
   public static final int ARM_MOTOR_TOP_CHANNEL = 6;
   public static final int ARM_MOTOR_BOTTOM_CHANNEL = 7;
 
-  public static final int INTAKE_BASE_PORT_CHANNEL = 8;
-  public static final int INTAKE_ROLLER_PORT_CHANNEL = 9;
+  public static final int STABILIZER_CHANNEL = 8;
+
+  public static final int ELEVATOR_CHANNEL = 9;
 
   // DIO
   public static final int ARM_ENCODER_A_CHANNEL = 0;
   public static final int ARM_ENCODER_B_CHANNEL = 1;
 
   // CAN
-  public static final int WRIST_CAN_ID = 1;
+  public static final int WRIST_CAN_ID = 2;
 
   public static final int CLAW_FORWARD_CHANNEL = 0;
   public static final int CLAW_REVERSE_CHANNEL = 1;
-
-  /** The port for the left elevator solenoid to move to DoubleSolenoid.Value.kForward. */
-  public static final int ELEVATOR_LEFT_FORWARD_CHANNEL = 0;
-  /** The port for the left elevator solenoid to move to DoubleSolenoid.Value.kReverse. */
-  public static final int ELEVATOR_LEFT_REVERSE_CHANNEL = 0;
-  /** The port for the right elevator solenoid to move to DoubleSolenoid.Value.kForward. */
-  public static final int ELEVATOR_RIGHT_FORWARD_CHANNEL = 0;
-  /** The port for the right elevator solenoid to move to DoubleSolenoid.Value.kReverse. */
-  public static final int ELEVATOR_RIGHT_REVERSE_CHANNEL = 0;
 
   // USB
   public static final int DRIVER_LEFT_JOYSTICK_PORT = 0;

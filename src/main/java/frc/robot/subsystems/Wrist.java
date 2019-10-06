@@ -2,8 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveWristTeleop;
@@ -26,20 +26,19 @@ public class Wrist extends PIDSubsystem {
    * The smaller appendage attached to the end of the Arm, which holds the Claw.
    */
   public Wrist() {
-    super("Wrist", .01, 0., 0.);
+    super("Wrist", .5, 0., 0.);
     motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, MotorType.kBrushless);
-    encoder = motor.getEncoder();
-    encoder.setPositionConversionFactor(2.);
-    encoder.setPosition(0.);
+    encoder = motor.getEncoder(EncoderType.kHallSensor, 42);
+    encoder.setPositionConversionFactor(360. / (encoder.getCPR() * RobotMap.WRIST_GEAR_RATIO));
 
-    setAbsoluteTolerance(.5);
+    setAbsoluteTolerance(5.);
     setInputRange(0., 270.);
-    setOutputRange(-0.3, 0.3);
+    setOutputRange(-0.2, 0.2);
     enable();
   }
 
   public void setMotor(double speed) {
-    motor.set(speed * .5);
+    motor.set(speed * .15);
   }
 
   public void moveTo(double degrees) {
@@ -56,21 +55,6 @@ public class Wrist extends PIDSubsystem {
 
   public boolean isTucked() {
     return getSetpoint() == 0. && onTarget();
-  }
-
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new MoveWristTeleop());
-  }
-
-  @Override
-  protected double returnPIDInput() {
-    return getAngle();
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    motor.pidWrite(output);
   }
 
   public double nearestWristSafePosition(double currentWristAngle) {
@@ -96,4 +80,18 @@ public class Wrist extends PIDSubsystem {
     return (wristAngleProjection > SAFE_WRIST_ANGLE_LOW && wristAngleProjection < SAFE_WRIST_ANGLE_HIGH);
   }
 
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new MoveWristTeleop());
+  }
+
+  @Override
+  protected double returnPIDInput() {
+    return getAngle();
+  }
+
+  @Override
+  protected void usePIDOutput(double output) {
+    motor.pidWrite(output);
+  }
 }

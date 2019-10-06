@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -34,7 +33,7 @@ public class DriveBase extends Subsystem {
       speed = 0.;
     if (Math.abs(turn) < 0.1)
       turn = 0.;
-    drive.arcadeDrive(0.8 * speed, 0.6 * turn);
+    drive.arcadeDrive(0.8 * speed, turn);
   }
 
   @Override

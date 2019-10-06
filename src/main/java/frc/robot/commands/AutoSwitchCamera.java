@@ -6,7 +6,6 @@ import frc.robot.Robot;
 import frc.robot.utils.Axis;
 
 public class AutoSwitchCamera extends Command {
-
   private Joystick joystick;
   private Axis axis;
 
@@ -43,5 +42,4 @@ public class AutoSwitchCamera extends Command {
   protected boolean isFinished() {
     return false;
   }
-
 }
