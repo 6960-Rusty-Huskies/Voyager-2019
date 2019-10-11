@@ -33,6 +33,6 @@ public class Vision extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new AutoSwitchCamera(Robot.oi.driverStickLeft, Axis.x));
+    setDefaultCommand(new AutoSwitchCamera(Robot.oi.driverStickLeft, Axis.y));
   }
 }

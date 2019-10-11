@@ -16,30 +16,22 @@ public class RobotMap {
   public static final int DRIVE_LEFT_FRONT_CHANNEL = 4;
   public static final int DRIVE_LEFT_BACK_CHANNEL = 5;
 
-  public static final int ARM_MOTOR_TOP_CHANNEL = 6;
-  public static final int ARM_MOTOR_BOTTOM_CHANNEL = 7;
+  public static final int ARM_MOTOR_CHANNEL = 6;
 
-  public static final int INTAKE_BASE_PORT_CHANNEL = 8;
-  public static final int INTAKE_ROLLER_PORT_CHANNEL = 9;
+  public static final int STABILIZER_CHANNEL = 7;
+
+  public static final int ELEVATOR_CHANNEL_LEFT = 8;
+  public static final int ELEVATOR_CHANNEL_RIGHT = 9;
 
   // DIO
   public static final int ARM_ENCODER_A_CHANNEL = 0;
   public static final int ARM_ENCODER_B_CHANNEL = 1;
 
   // CAN
-  public static final int WRIST_CAN_ID = 1;
+  public static final int WRIST_CAN_ID = 2;
 
   public static final int CLAW_FORWARD_CHANNEL = 0;
   public static final int CLAW_REVERSE_CHANNEL = 1;
-
-  /** The port for the left elevator solenoid to move to DoubleSolenoid.Value.kForward. */
-  public static final int ELEVATOR_LEFT_FORWARD_CHANNEL = 0;
-  /** The port for the left elevator solenoid to move to DoubleSolenoid.Value.kReverse. */
-  public static final int ELEVATOR_LEFT_REVERSE_CHANNEL = 0;
-  /** The port for the right elevator solenoid to move to DoubleSolenoid.Value.kForward. */
-  public static final int ELEVATOR_RIGHT_FORWARD_CHANNEL = 0;
-  /** The port for the right elevator solenoid to move to DoubleSolenoid.Value.kReverse. */
-  public static final int ELEVATOR_RIGHT_REVERSE_CHANNEL = 0;
 
   // USB
   public static final int DRIVER_LEFT_JOYSTICK_PORT = 0;
@@ -71,6 +63,12 @@ public class RobotMap {
 
   /** The radius of the arm from the pivot point to the other end, in inches. */
   public static final double ARM_RADIUS = 32.0;
+
+  /** The radius of the wrist from the end of the arm to the end of the claw, in inches. */
+  public static final double WRIST_RADIUS = 0.0;
+
+  /** The length from the center of the drive base to the edge of the bumper, in inches. */
+  public static final double FRAME_PERIMITER = 0.0;
 
   /** The gear ratio of the arm encoder. Used to determine the distance per pulse of the arm. */
   public static final double ARM_GEAR_RATIO = 1 / 1;

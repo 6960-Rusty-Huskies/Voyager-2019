@@ -1,47 +1,38 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.MoveElevatorTeleop;
 
 /**
  * The pneumatic actuators that lift the robot to get us to level 3.
  */
 public class Elevator extends Subsystem {
-  private DoubleSolenoid leftSolenoid;
-  private DoubleSolenoid rightSolenoid;
+  private Spark elevatorMotorLeft;
+  private Spark elevatorMotorRight;
+  private Spark stabilizerMotor;
 
   public Elevator() {
-    leftSolenoid = new DoubleSolenoid(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL);
-    rightSolenoid = new DoubleSolenoid(RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
+    elevatorMotorLeft = new Spark(RobotMap.ELEVATOR_CHANNEL_LEFT);
+    elevatorMotorLeft.setInverted(true);
+    elevatorMotorRight = new Spark(RobotMap.ELEVATOR_CHANNEL_RIGHT);
 
-    leftSolenoid.set(Value.kReverse);
-    rightSolenoid.set(Value.kReverse);
+    stabilizerMotor = new Spark(RobotMap.STABILIZER_CHANNEL);
   }
 
-  public void toggle() {
-    Value toggleValue = leftSolenoid.get() == Value.kForward ? Value.kReverse : Value.kForward;
-
-    leftSolenoid.set(toggleValue);
-    rightSolenoid.set(toggleValue);
+  public void setElevator(double speed) {
+    elevatorMotorRight.set(speed);
+    
+    elevatorMotorLeft.set(0.95 * speed);
   }
 
-  public void putDown() {
-    leftSolenoid.set(Value.kForward);
-    rightSolenoid.set(Value.kForward);
-  }
-
-  public void putUp() {
-    leftSolenoid.set(Value.kReverse);
-    rightSolenoid.set(Value.kReverse);
-  }
-
-  public boolean isDown() {
-    return leftSolenoid.get() == Value.kForward;
+  public void setStabilizer(double speed) {
+    stabilizerMotor.set(0.6 * speed);
   }
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new MoveElevatorTeleop());
   }
 }

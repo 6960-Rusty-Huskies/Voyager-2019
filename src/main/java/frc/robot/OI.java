@@ -22,7 +22,7 @@ public class OI {
 
   public Button hatchLowButton = new JoystickButton(operatorStickRight, RobotMap.HATCH_LOW_PORT);
   public Button hatchMediumButton = new JoystickButton(operatorStickRight, RobotMap.HATCH_MEDIUM_PORT);
-  public Button hatchHighButton = new JoystickButton(operatorStickRight, RobotMap.HATCH_MEDIUM_PORT);
+  public Button hatchHighButton = new JoystickButton(operatorStickRight, RobotMap.HATCH_HIGH_PORT);
   public Button hatchGrabButton = new JoystickButton(operatorStickRight, RobotMap.HATCH_GRAB_PORT);
 
   public Button clawToggleButton = new JoystickButton(operatorStickRight, RobotMap.CLAW_TOGGLE_PORT);

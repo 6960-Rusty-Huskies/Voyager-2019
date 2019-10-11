@@ -19,6 +19,7 @@ public class GrabGamepiece extends CommandGroup {
     double wristAngleGoal = armAngleGoal + 90.;
 
     addParallel(new SetClaw(false));
+    addSequential(new MoveWristToAngle(0.));
     addSequential(new MoveArmToAngle(armAngleGoal));
     addSequential(new MoveWristToAngle(wristAngleGoal));
     
