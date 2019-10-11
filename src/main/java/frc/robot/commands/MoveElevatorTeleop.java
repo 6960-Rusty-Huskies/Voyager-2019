@@ -23,13 +23,18 @@ public class MoveElevatorTeleop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double elevatorSpeed = Math.abs(Robot.oi.operatorStickLeft.getY());
-    double stabilizerSpeed = Math.abs(Robot.oi.operatorStickLeft.getX());
+    double elevatorSpeed = (double) Math.round(Robot.oi.operatorStickRight.getX());
+    boolean moveStabilizerDown = Robot.oi.driverStickLeft.getRawButton(10);
+    boolean moveStabilizerUp = Robot.oi.driverStickLeft.getRawButton(11);
 
-    if (elevatorSpeed > 0.1 ^ stabilizerSpeed > 0.1) {
-      Robot.elevator.setElevator(elevatorSpeed);
-      Robot.elevator.setStabilizer(stabilizerSpeed);
-    }
+    Robot.elevator.setElevator(elevatorSpeed);
+
+    if (moveStabilizerDown)
+      Robot.elevator.setStabilizer(1.0);
+    else if(moveStabilizerUp) 
+      Robot.elevator.setStabilizer(-1.0);
+    else 
+      Robot.elevator.setStabilizer(0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()

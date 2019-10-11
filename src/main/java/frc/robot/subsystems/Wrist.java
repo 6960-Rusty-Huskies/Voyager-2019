@@ -2,9 +2,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveWristTeleop;
 
@@ -13,12 +14,6 @@ import frc.robot.commands.MoveWristTeleop;
  */
 public class Wrist extends PIDSubsystem {
 
-  // todo: these numbers all have to be verified... currently just a rough estimate
-  private static final double SAFE_WRIST_ANGLE_LOW = 20.0;
-  private static final double SAFE_WRIST_ANGLE_HIGH = 60.0;
-  // This would be 180 if we had actual angle
-  private static final double WRIST_STRAIGHT_ANGLE = 40.0;
-
   private CANSparkMax motor;
   private CANEncoder encoder;
 
@@ -26,14 +21,16 @@ public class Wrist extends PIDSubsystem {
    * The smaller appendage attached to the end of the Arm, which holds the Claw.
    */
   public Wrist() {
-    super("Wrist", .5, 0., 0.);
+    super("Wrist", 0.005, 0., 0.);
     motor = new CANSparkMax(RobotMap.WRIST_CAN_ID, MotorType.kBrushless);
-    encoder = motor.getEncoder(EncoderType.kHallSensor, 42);
-    encoder.setPositionConversionFactor(360. / (encoder.getCPR() * RobotMap.WRIST_GEAR_RATIO));
+    
+    encoder = motor.getEncoder();
+    encoder.setPositionConversionFactor((2. * RobotMap.WRIST_GEAR_RATIO * 42.) / 360.);
+    encoder.setPosition(0.0);
 
-    setAbsoluteTolerance(5.);
+    setAbsoluteTolerance(0.5);
     setInputRange(0., 270.);
-    setOutputRange(-0.2, 0.2);
+    setOutputRange(-0.3, 0.3);
     enable();
   }
 
@@ -57,27 +54,19 @@ public class Wrist extends PIDSubsystem {
     return getSetpoint() == 0. && onTarget();
   }
 
-  public double nearestWristSafePosition(double currentWristAngle) {
-    if (currentWristAngle <= WRIST_STRAIGHT_ANGLE) {
-      return Math.min(currentWristAngle, SAFE_WRIST_ANGLE_LOW);
-    } else {
-      return Math.max(currentWristAngle, SAFE_WRIST_ANGLE_HIGH);
+  public double nearestPositionInBoundary() {
+    if(isWithinBoundary(getAngle())) {
+      return getAngle();
     }
+    return Math.acos((30. - getAngle()) / RobotMap.WRIST_RADIUS);
   }
 
-  public boolean wristNeedsToFlip(double currentWristAngle, double wristAngleGoal) {
-    return (currentWristAngle < WRIST_STRAIGHT_ANGLE && wristAngleGoal >= WRIST_STRAIGHT_ANGLE)
-            || (currentWristAngle > WRIST_STRAIGHT_ANGLE && wristAngleGoal <= WRIST_STRAIGHT_ANGLE);
+  public boolean isWithinBoundary(double currentAngle) {
+    return getXComponent() + Robot.arm.getXComponent() <= RobotMap.FRAME_PERIMITER + 30.;
   }
 
-  /**
-   * Use this to check to see if we are moving into an unsafe position... only useful if Arm is in the unsafe zone.
-   *
-   * @param wristAngleProjection - Projected wrist angle/where wrist is moving to next.
-   * @return Whether or not the wrist will be moving into an unsafe position.
-   */
-  public boolean isMovingToUnsafePosition(double wristAngleProjection) {
-    return (wristAngleProjection > SAFE_WRIST_ANGLE_LOW && wristAngleProjection < SAFE_WRIST_ANGLE_HIGH);
+  public double getXComponent() {
+    return RobotMap.WRIST_RADIUS * Math.cos(Math.toRadians(270. - getAngle() - Robot.arm.getAngle()));
   }
 
   @Override

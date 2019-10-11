@@ -40,9 +40,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
     vision = new Vision();
     driveBase = new DriveBase();
-
-    // elevator = new Elevator(RobotMap.ELEVATOR_LEFT_FORWARD_CHANNEL, RobotMap.ELEVATOR_LEFT_REVERSE_CHANNEL,
-    //    RobotMap.ELEVATOR_RIGHT_FORWARD_CHANNEL, RobotMap.ELEVATOR_RIGHT_REVERSE_CHANNEL);
+    elevator = new Elevator();
     oi = new OI();
 
     oi.clawToggleButton.whenPressed(new ToggleClaw());
@@ -71,7 +69,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("DB/String 0", wrist.getAngle());
+    SmartDashboard.putString("DB/String 0", "WE: " + Double.toString(wrist.getAngle()));
     SmartDashboard.putString("DB/String 1", "WS: " + Double.toString(wrist.getSetpoint()));
     SmartDashboard.putString("DB/String 2", "AE: " + Double.toString(arm.getAngle()));
     SmartDashboard.putString("DB/String 3", "AS: " + Double.toString(arm.getSetpoint()));

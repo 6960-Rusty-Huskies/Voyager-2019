@@ -17,32 +17,41 @@ public class MoveArmToLevel extends CommandGroup {
         double wristAngleGoal = 0.0;
 
         switch (level) {
-        case low:
-            if (gamepiece == Gamepiece.cargo) {
-                armAngleGoal = 49.5;
-                wristAngleGoal = 12.7;
-            } else {
-                armAngleGoal = 36.4;
-                wristAngleGoal = 16.2;
-            }
+            case low:
+                switch(gamepiece) {
+                    case cargo:
+                        armAngleGoal = 45.;
+                        wristAngleGoal = 70.;
+                        break;
+                    case hatch: 
+                        armAngleGoal = 40.;
+                        wristAngleGoal = 90.;
+                        break;
+                }
             break;
-        case middle:
-            if (gamepiece == Gamepiece.cargo) {
-                armAngleGoal = 81.45;
-                wristAngleGoal = 15.5;
-            } else {
-                armAngleGoal = 75.0;
-                wristAngleGoal = 20.0;
-            }
+            case middle:
+                switch(gamepiece) {
+                    case cargo:
+                        armAngleGoal = 81.;
+                        wristAngleGoal = 78.;
+                        break;
+                    case hatch:
+                        armAngleGoal = Robot.arm.getAngle();
+                        wristAngleGoal = Robot.wrist.getAngle();
+                        break;
+                }
             break;
-        case high:
-            if (gamepiece == Gamepiece.cargo) {
-                armAngleGoal = 161.9;
-                wristAngleGoal = 35.1;
-            } else {
-                armAngleGoal = 164.1;
-                wristAngleGoal = 40.5;
-            }
+            case high:
+                switch(gamepiece) {
+                    case cargo:
+                        armAngleGoal = 168.;
+                        wristAngleGoal = 197.;
+                        break;
+                    case hatch:
+                        armAngleGoal = 170.;
+                        wristAngleGoal = 215.;
+                        break;
+                }
             break;
         }
 
@@ -66,7 +75,7 @@ public class MoveArmToLevel extends CommandGroup {
         //     }
         // }
 
-        addSequential(new MoveArmToAngle(armAngleGoal));
+        addParallel(new MoveArmToAngle(armAngleGoal));
         addSequential(new MoveWristToAngle(wristAngleGoal));
     }
 
