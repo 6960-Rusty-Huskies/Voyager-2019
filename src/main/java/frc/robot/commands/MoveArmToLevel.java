@@ -12,7 +12,6 @@ public class MoveArmToLevel extends CommandGroup {
      * gamepiece.
      */
     public MoveArmToLevel(Level level, Gamepiece gamepiece) {
-
         double armAngleGoal = 0.0;
         double wristAngleGoal = 0.0;
 
@@ -55,26 +54,7 @@ public class MoveArmToLevel extends CommandGroup {
             break;
         }
 
-        // // Check to see if we need to "tuck" the wrist so we don't go out of bounds
-        // double currentArmAngle = Robot.arm.getAngle();
-        // double currentWristAngle = Robot.wrist.getAngle();
-        // if (Robot.arm.isWithinSafeZone(currentArmAngle)) {
-        //     // We are safe to move the wrist here... now check to see if we need to tuck it
-        //     if (Robot.arm.isMovingThroughUnsafeZone(currentArmAngle, armAngleGoal)) {
-        //         addSequential(new MoveArmToAngle(Robot.arm.nearestSafePositionToGoal(currentArmAngle, armAngleGoal)));
-        //     } else {
-                // Safe to just move wrist to final angle while arm moves to position
-                // addParallel(new MoveWristToAngle(wristAngleGoal));
-        //     }
-        // } else {
-        //     // We are NOT in a safe zone
-        //     addParallel(new MoveWristToAngle(Robot.wrist.nearestWristSafePosition(currentWristAngle)));
-        //     if (Robot.wrist.wristNeedsToFlip(currentWristAngle, wristAngleGoal)) {
-        //         addSequential(new MoveArmToAngle(Robot.arm.nearestSafePositionToGoal(currentArmAngle, armAngleGoal)));
-        //         addSequential(new MoveWristToAngle(Robot.wrist.nearestWristSafePosition(wristAngleGoal)));
-        //     }
-        // }
-
+        addSequential(new MoveWristToAngle(0.));
         addSequential(new MoveArmToAngle(armAngleGoal));
         addSequential(new MoveWristToAngle(wristAngleGoal));
     }
