@@ -33,7 +33,7 @@ public class DriveBase extends Subsystem {
       speed = 0.;
     if (Math.abs(turn) < 0.1)
       turn = 0.;
-    drive.arcadeDrive(0.8 * speed, turn);
+    drive.arcadeDrive(0.8 * speed, 0.6 * turn);
   }
 
   @Override

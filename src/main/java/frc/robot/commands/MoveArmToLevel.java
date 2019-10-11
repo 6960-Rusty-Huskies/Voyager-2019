@@ -75,7 +75,7 @@ public class MoveArmToLevel extends CommandGroup {
         //     }
         // }
 
-        addParallel(new MoveArmToAngle(armAngleGoal));
+        addSequential(new MoveArmToAngle(armAngleGoal));
         addSequential(new MoveWristToAngle(wristAngleGoal));
     }
 
