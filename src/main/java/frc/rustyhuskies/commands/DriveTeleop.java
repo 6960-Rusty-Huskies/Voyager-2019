@@ -1,16 +1,16 @@
-package frc.robot.commands;
+package frc.rustyhuskies.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.rustyhuskies.Voyager;
 
 public class DriveTeleop extends Command {
   public DriveTeleop() {
-    requires(Robot.driveBase);
+    requires(Voyager.driveBase);
   }
 
   @Override
   protected void execute() {
-    Robot.driveBase.manualDrive(Robot.oi.driverStickLeft.getY(), Robot.oi.driverStickRight.getX());
+    Voyager.driveBase.manualDrive(Voyager.oi.driverStickLeft.getY(), Voyager.oi.driverStickRight.getX());
   }
 
   @Override

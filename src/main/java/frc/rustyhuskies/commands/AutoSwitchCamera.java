@@ -1,16 +1,16 @@
-package frc.robot.commands;
+package frc.rustyhuskies.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.utils.Axis;
+import frc.rustyhuskies.Voyager;
+import frc.rustyhuskies.utils.Axis;
 
 public class AutoSwitchCamera extends Command {
   private Joystick joystick;
   private Axis axis;
 
   public AutoSwitchCamera(Joystick stick, Axis axisOfMotion) {
-    requires(Robot.vision);
+    requires(Voyager.vision);
     axis = axisOfMotion;
     joystick = stick;
   }
@@ -32,9 +32,9 @@ public class AutoSwitchCamera extends Command {
     }
 
     if (val > 0.1) {
-      Robot.vision.setFrontCamera();
+      Voyager.vision.setFrontCamera();
     } else if (val < -0.1) {
-      Robot.vision.setBackCamera();
+      Voyager.vision.setBackCamera();
     }
   }
 

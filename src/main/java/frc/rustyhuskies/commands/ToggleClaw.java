@@ -1,16 +1,16 @@
-package frc.robot.commands;
+package frc.rustyhuskies.commands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.Robot;
+import frc.rustyhuskies.Voyager;
 
 public class ToggleClaw extends InstantCommand {
 
   public ToggleClaw() {
-    requires(Robot.claw);
+    requires(Voyager.claw);
   }
 
   @Override
   protected void initialize() {
-    Robot.claw.toggle();
+    Voyager.claw.toggle();
   }
 }

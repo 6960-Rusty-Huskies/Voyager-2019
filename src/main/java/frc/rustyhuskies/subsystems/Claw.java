@@ -1,9 +1,9 @@
-package frc.robot.subsystems;
+package frc.rustyhuskies.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
+import frc.rustyhuskies.RobotMap;
 
 /**
  * The pneumatic hooks that hold cargo and hatches.

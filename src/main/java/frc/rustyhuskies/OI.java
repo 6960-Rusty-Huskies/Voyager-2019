@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.rustyhuskies;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

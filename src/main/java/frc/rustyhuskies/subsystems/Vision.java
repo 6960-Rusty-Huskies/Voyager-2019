@@ -1,16 +1,16 @@
-package frc.robot.subsystems;
+package frc.rustyhuskies.subsystems;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.commands.AutoSwitchCamera;
-import frc.robot.utils.Axis;
+import frc.rustyhuskies.Voyager;
+import frc.rustyhuskies.RobotMap;
+import frc.rustyhuskies.commands.AutoSwitchCamera;
+import frc.rustyhuskies.utils.Axis;
 
 /**
- * The cameras on the robot.
+ * The cameras on Voyager.
  */
 public class Vision extends Subsystem {
   private VideoSink server;
@@ -33,6 +33,6 @@ public class Vision extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new AutoSwitchCamera(Robot.oi.driverStickLeft, Axis.y));
+    setDefaultCommand(new AutoSwitchCamera(Voyager.oi.driverStickLeft, Axis.y));
   }
 }

@@ -1,31 +1,31 @@
-package frc.robot.commands;
+package frc.rustyhuskies.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.rustyhuskies.Voyager;
 
 public class MoveArmTeleop extends Command {
 
     private long previousStickValue = 0;
 
     public MoveArmTeleop() {
-        requires(Robot.arm);
+        requires(Voyager.arm);
     }
 
     @Override
     protected void execute() {
-        long currentStickValue = Math.round(Robot.oi.operatorStickLeft.getY());
+        long currentStickValue = Math.round(Voyager.oi.operatorStickLeft.getY());
 
         // Check to see if joystick has changed
         if (currentStickValue != previousStickValue) {
             if (currentStickValue != 0) {
                 // User is moving arm, stop PID Controller
-                Robot.arm.disable();
-                Robot.arm.setMotor(currentStickValue);
+                Voyager.arm.disable();
+                Voyager.arm.setMotor(currentStickValue);
             } else {
                 // Stop arm and enable PID Controller
-                Robot.arm.setMotor(0);
-                Robot.arm.enable();
-                Robot.arm.setSetpoint(Robot.arm.getAngle());
+                Voyager.arm.setMotor(0);
+                Voyager.arm.enable();
+                Voyager.arm.setSetpoint(Voyager.arm.getAngle());
             }
             previousStickValue = currentStickValue;
         }

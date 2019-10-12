@@ -1,4 +1,4 @@
-package frc.robot.utils;
+package frc.rustyhuskies.utils;
 
 /**
  * Either hatch or cargo.

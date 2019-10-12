@@ -1,9 +1,10 @@
-package frc.robot.subsystems;
+package frc.rustyhuskies.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
-import frc.robot.commands.MoveElevatorTeleop;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.rustyhuskies.RobotMap;
+import frc.rustyhuskies.commands.MoveElevatorTeleop;
 
 /**
  * The pneumatic actuators that lift the robot to get us to level 3.
@@ -22,9 +23,8 @@ public class Elevator extends Subsystem {
   }
 
   public void setElevator(double speed) {
-    elevatorMotorRight.set(speed);
-    
-    elevatorMotorLeft.set(0.95 * speed);
+    elevatorMotorRight.set(SmartDashboard.getNumber("DB/Slider 0", 1.0) * speed);
+    elevatorMotorLeft.set(SmartDashboard.getNumber("DB/Slider 1", 1.0) * speed);
   }
 
   public void setStabilizer(double speed) {

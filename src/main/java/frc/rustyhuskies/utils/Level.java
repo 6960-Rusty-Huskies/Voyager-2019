@@ -1,8 +1,8 @@
-package frc.robot.utils;
+package frc.rustyhuskies.utils;
 
 /**
  * The rocket level to which to send the arm in the MoveArmToAngle() command.
  */
 public enum Level {
-    low, middle, high
+    low, middle, high, grab, bay
 }

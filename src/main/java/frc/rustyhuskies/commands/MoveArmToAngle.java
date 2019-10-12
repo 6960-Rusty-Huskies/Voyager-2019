@@ -1,30 +1,31 @@
-package frc.robot.commands;
+package frc.rustyhuskies.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.rustyhuskies.Voyager;
 
 public class MoveArmToAngle extends Command {
 
   private double angleGoal;
 
   public MoveArmToAngle(double degrees) {
-    requires(Robot.arm);
+    requires(Voyager.arm);
     angleGoal = degrees;
   }
 
   @Override
   protected void initialize() {
-    Robot.arm.moveTo(angleGoal);
+    Voyager.arm.moveTo(angleGoal);
+    System.out.println("##### MoveArmToAngle(" + angleGoal + ") initialized. #####");
   }
 
   @Override
   protected boolean isFinished() {
-    return Robot.arm.onTarget();
+    return Voyager.arm.onTarget();
   }
 
   @Override
   protected void end(){
-
+    System.out.println("##### MoveArmToAngle(" + angleGoal +") ended. #####");
   }
 
   @Override

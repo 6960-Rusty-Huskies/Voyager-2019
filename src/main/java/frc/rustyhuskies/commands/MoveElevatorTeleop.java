@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.rustyhuskies.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.rustyhuskies.Voyager;
 
 public class MoveElevatorTeleop extends Command {
   public MoveElevatorTeleop() {
-    requires(Robot.elevator);
+    requires(Voyager.elevator);
   }
 
   // Called just before this Command runs the first time
@@ -23,18 +23,18 @@ public class MoveElevatorTeleop extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double elevatorSpeed = (double) Math.round(Robot.oi.operatorStickRight.getX());
-    boolean moveStabilizerDown = Robot.oi.driverStickLeft.getRawButton(10);
-    boolean moveStabilizerUp = Robot.oi.driverStickLeft.getRawButton(11);
+    double elevatorSpeed = (double) Math.round(Voyager.oi.operatorStickRight.getX());
+    boolean moveStabilizerDown = Voyager.oi.driverStickLeft.getRawButton(10);
+    boolean moveStabilizerUp = Voyager.oi.driverStickLeft.getRawButton(11);
 
-    Robot.elevator.setElevator(elevatorSpeed);
+    Voyager.elevator.setElevator(elevatorSpeed);
 
     if (moveStabilizerDown)
-      Robot.elevator.setStabilizer(1.0);
+      Voyager.elevator.setStabilizer(1.0);
     else if(moveStabilizerUp) 
-      Robot.elevator.setStabilizer(-1.0);
+      Voyager.elevator.setStabilizer(-1.0);
     else 
-      Robot.elevator.setStabilizer(0.0);
+      Voyager.elevator.setStabilizer(0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()

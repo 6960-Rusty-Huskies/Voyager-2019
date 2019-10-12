@@ -1,9 +1,9 @@
-package frc.robot.commands;
+package frc.rustyhuskies.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
-import frc.robot.utils.Gamepiece;
-import frc.robot.utils.Level;
+import frc.rustyhuskies.Voyager;
+import frc.rustyhuskies.utils.Gamepiece;
+import frc.rustyhuskies.utils.Level;
 
 public class MoveArmToLevel extends CommandGroup {
 
@@ -35,8 +35,8 @@ public class MoveArmToLevel extends CommandGroup {
                         wristAngleGoal = 78.;
                         break;
                     case hatch:
-                        armAngleGoal = Robot.arm.getAngle();
-                        wristAngleGoal = Robot.wrist.getAngle();
+                        armAngleGoal = 0.;
+                        wristAngleGoal = 0.;
                         break;
                 }
             break;
@@ -52,6 +52,30 @@ public class MoveArmToLevel extends CommandGroup {
                         break;
                 }
             break;
+            case grab:
+                switch(gamepiece) {
+                    case cargo:
+                        armAngleGoal = 81.;
+                        wristAngleGoal = 78.;
+                        break;
+                    case hatch:
+                        armAngleGoal = 40.;
+                        wristAngleGoal = 90;
+                }
+            break;
+            case bay:
+                switch(gamepiece) {
+                    case cargo:
+                        armAngleGoal = 135.;
+                        wristAngleGoal = 270.;
+                        break;
+                    case hatch:
+                        armAngleGoal = Voyager.arm.getAngle();
+                        wristAngleGoal = Voyager.wrist.getAngle();
+                }
+            default:
+                armAngleGoal = Voyager.arm.getAngle();
+                wristAngleGoal = Voyager.wrist.getAngle();
         }
 
         addSequential(new MoveWristToAngle(0.));
@@ -61,6 +85,6 @@ public class MoveArmToLevel extends CommandGroup {
 
     @Override
     protected boolean isFinished() {
-        return super.isFinished() || Robot.oi.operatorStickLeft.getMagnitude() > 0.1;
+        return super.isFinished() || Voyager.oi.operatorStickLeft.getMagnitude() > 0.1;
     }
 }

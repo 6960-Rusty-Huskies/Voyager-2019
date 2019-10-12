@@ -1,10 +1,10 @@
-package frc.robot.subsystems;
+package frc.rustyhuskies.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import frc.robot.RobotMap;
-import frc.robot.commands.MoveArmTeleop;
+import frc.rustyhuskies.RobotMap;
+import frc.rustyhuskies.commands.MoveArmTeleop;
 
 /**
  * The arm connected to the frame of the robot that holds the wrist.

@@ -1,24 +1,22 @@
-package frc.robot;
+package frc.rustyhuskies;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.GrabGamepiece;
-import frc.robot.commands.MoveArmToAngle;
-import frc.robot.commands.MoveArmToLevel;
-import frc.robot.commands.ToggleClaw;
-import frc.robot.subsystems.*;
-import frc.robot.utils.Gamepiece;
-import frc.robot.utils.Level;
+import frc.rustyhuskies.commands.MoveArmToLevel;
+import frc.rustyhuskies.commands.ToggleClaw;
+import frc.rustyhuskies.subsystems.*;
+import frc.rustyhuskies.utils.Gamepiece;
+import frc.rustyhuskies.utils.Level;
 
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
- * creating this project, y ou must also update the build.gradle file in the
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Voyager extends TimedRobot {
 
   public static DriveBase driveBase;
   public static Arm arm;
@@ -43,19 +41,18 @@ public class Robot extends TimedRobot {
     elevator = new Elevator();
     oi = new OI();
 
-    oi.clawToggleButton.whenPressed(new ToggleClaw());
-    // oi.elevatorToggleButton.whenPressed(new ToggleElevator());
-    oi.elevatorToggleButton.whenPressed(new MoveArmToAngle(90));
+    oi.clawToggleButton.whenReleased(new ToggleClaw());
+    oi.elevatorToggleButton.whenReleased(new MoveArmToLevel(Level.bay, Gamepiece.cargo));
 
-    oi.hatchLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.hatch));
-    oi.hatchMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.hatch));
-    oi.hatchHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.hatch));
-    oi.hatchGrabButton.whenPressed(new GrabGamepiece(Gamepiece.hatch));
+    oi.hatchLowButton.whenReleased(new MoveArmToLevel(Level.low, Gamepiece.hatch));
+    oi.hatchMediumButton.whenReleased(new MoveArmToLevel(Level.middle, Gamepiece.hatch));
+    oi.hatchHighButton.whenReleased(new MoveArmToLevel(Level.high, Gamepiece.hatch));
+    oi.hatchGrabButton.whenReleased(new MoveArmToLevel(Level.grab, Gamepiece.hatch));
 
-    oi.cargoLowButton.whenPressed(new MoveArmToLevel(Level.low, Gamepiece.cargo));
-    oi.cargoMediumButton.whenPressed(new MoveArmToLevel(Level.middle, Gamepiece.cargo));
-    oi.cargoHighButton.whenPressed(new MoveArmToLevel(Level.high, Gamepiece.cargo));
-    oi.cargoGrabButton.whenPressed(new GrabGamepiece(Gamepiece.cargo));
+    oi.cargoLowButton.whenReleased(new MoveArmToLevel(Level.low, Gamepiece.cargo));
+    oi.cargoMediumButton.whenReleased(new MoveArmToLevel(Level.middle, Gamepiece.cargo));
+    oi.cargoHighButton.whenReleased(new MoveArmToLevel(Level.high, Gamepiece.cargo));
+    oi.cargoGrabButton.whenReleased(new MoveArmToLevel(Level.grab, Gamepiece.cargo));
   }
 
   /**
@@ -91,16 +88,7 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable chooser
-   * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-   * remove all of the chooser code and uncomment the getString code to get the
-   * auto name from the text box below the Gyro
-   *
-   * <p>
-   * You can add additional auto modes by adding additional commands to the
-   * chooser code above (like the commented example) or additional comparisons to
-   * the switch structure below with additional strings & commands.
+   * This function is called once when the robot enters Autonomous mode. Use it to 
    */
   @Override
   public void autonomousInit() {

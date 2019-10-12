@@ -1,13 +1,13 @@
-package frc.robot.subsystems;
+package frc.rustyhuskies.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.commands.MoveWristTeleop;
+import frc.rustyhuskies.Voyager;
+import frc.rustyhuskies.RobotMap;
+import frc.rustyhuskies.commands.MoveWristTeleop;
 
 /**
  * The smaller appendage attached to the end of the Arm, which holds the Claw.
@@ -62,11 +62,11 @@ public class Wrist extends PIDSubsystem {
   }
 
   public boolean isWithinBoundary(double currentAngle) {
-    return getXComponent() + Robot.arm.getXComponent() <= RobotMap.FRAME_PERIMITER + 30.;
+    return getXComponent() + Voyager.arm.getXComponent() <= RobotMap.FRAME_PERIMITER + 30.;
   }
 
   public double getXComponent() {
-    return RobotMap.WRIST_RADIUS * Math.cos(Math.toRadians(270. - getAngle() - Robot.arm.getAngle()));
+    return RobotMap.WRIST_RADIUS * Math.cos(Math.toRadians(270. - getAngle() - Voyager.arm.getAngle()));
   }
 
   @Override

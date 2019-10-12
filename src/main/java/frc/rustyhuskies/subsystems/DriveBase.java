@@ -1,11 +1,11 @@
-package frc.robot.subsystems;
+package frc.rustyhuskies.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.RobotMap;
-import frc.robot.commands.DriveTeleop;
+import frc.rustyhuskies.RobotMap;
+import frc.rustyhuskies.commands.DriveTeleop;
 
 /**
  * A base with wheels that moves the robot.
@@ -33,7 +33,7 @@ public class DriveBase extends Subsystem {
       speed = 0.;
     if (Math.abs(turn) < 0.1)
       turn = 0.;
-    drive.arcadeDrive(0.8 * speed, 0.6 * turn);
+    drive.arcadeDrive(speed, turn);
   }
 
   @Override
